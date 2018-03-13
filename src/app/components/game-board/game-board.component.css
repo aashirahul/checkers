@@ -1,0 +1,7 @@
+container{
+    background: white;
+}
+.row {
+    display: flex;
+    margin-bottom: 5px;
+}
