@@ -6,9 +6,22 @@
 .square{
     width: 50px;
     height: 50px;
-    background:lightgrey;
     border-radius:5px;
     display: flex;
+}
+.row:nth-child(even) :host:nth-child(even) .square{
+    background: lightblue;
+}
+
+.row:nth-child(even) :host:nth-child(odd) .square{
+    background:lightskyblue;
+}
+.row:nth-child(odd) :host:nth-child(even) .square{
+    background: lightskyblue;
+}
+
+.row:nth-child(odd) :host:nth-child(odd) .square{
+    background:lightblue;
 }
 .square-value{
     margin: auto;
