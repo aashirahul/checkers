@@ -1,5 +1,9 @@
-container{
-    background: white;
+.container-box{
+    display:flex;
+}
+
+.container{
+   margin: auto;
 }
 .row {
     display: flex;

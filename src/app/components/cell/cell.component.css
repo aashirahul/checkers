@@ -28,3 +28,18 @@
     font-size: 50px;
     font-family: Arial, Helvetica, sans-serif;
 }
+.red{
+   background:red;
+   border-radius: 50%;
+   box-shadow: 0 0 0 4px lightgrey;
+}
+.black{
+    background: black;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px lightgrey;
+ }
+#piece-style{
+    width:25px;
+    height: 25px;
+
+}

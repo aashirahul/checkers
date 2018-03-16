@@ -1,3 +1,11 @@
 <div class="square check-square">
-  <div class="square-value"></div>
+  <div class="square-value">
+    <div class="red" *ngIf="this.piece === 1">
+      <div id="piece-style"></div>
+    </div>
+    <div class="black" *ngIf="this.piece === 2">
+      <div id="piece-style"></div>
+    </div>
+
+  </div>
 </div>
