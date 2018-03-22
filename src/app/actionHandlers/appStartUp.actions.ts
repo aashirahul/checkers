@@ -18,6 +18,7 @@ export class AppStartUpActions {
     ) { }
 
     public initializeGame(): void {
+        // Replace null with Piece.NONE
         const pieces = [
             [null, Piece.RED, null, Piece.RED, null, Piece.RED, null, Piece.RED],
             [Piece.RED, null, Piece.RED, null, Piece.RED, null, Piece.RED, null],
@@ -30,5 +31,13 @@ export class AppStartUpActions {
         ];
 
         this._store.dispatch({ type: DISPLAY_PIECES, payload: pieces });
+    }
+
+    public move(from: any, to: any): void {
+        this._store.select('pieces').subscribe((pieces) => {
+            pieces[to.row][to.col] = pieces[from.row][from.col];
+            pieces[from.row][from.col] = null;
+            this._store.dispatch({ type: DISPLAY_PIECES, payload: pieces});
+        });
     }
 }

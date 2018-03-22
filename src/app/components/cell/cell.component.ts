@@ -12,5 +12,6 @@ export class CellComponent {
   @Input()
   piece: Piece;
 
+  Piece = Piece;
 
 }
