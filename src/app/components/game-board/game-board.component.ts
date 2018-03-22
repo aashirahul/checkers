@@ -23,33 +23,77 @@ export class GameBoardComponent implements OnInit {
 
   }
 
-  private isMoving = false;
-  private originalPosition: Position;
-  move(row, col) {
+  public moveSelected(row, col, piece) {
     if (!this.isMoving) {
       this.originalPosition = { row, col };
       this.isMoving = true;
     } else {
-      if (this.isValid(this.originalPosition, { row, col })) {
-
+      if (this.isAJump(this.originalPosition, { row, col })) {
+        this._pieceState.jump(this.originalPosition, { row, col }, this.skippedPosition);
+      }
+      if (this.isValidMove(this.originalPosition, { row, col })) {
+        this._pieceState.move(this.originalPosition, { row, col });
       }
       this.isMoving = false;
+      this.currentPlayer = this.currentPlayer === 'Player Red' ? 'Player Black' : 'Player Red';
     }
   }
 
-  private isValid(from: Position, to: Position) {
-    if (this.pieces[to.row][to.col] !== null) {
+  public isAJump(from: Position, to: Position) {
+    const pieceSelected = this.pieces[from.row][from.col];
+    if (pieceSelected === 1) {
+      if (to.row > from.row) {
+        if (from.col === to.col - 2) {
+          this.skippedPosition.row = to.row + 1;
+          this.skippedPosition.col = to.col - 1;
+          return true;
+        }
+        if (from.col === to.col + 2) {
+          this.skippedPosition.row = to.row + 1;
+          this.skippedPosition.col = to.col + 1;
+          return true;
+        }
+      }
+    } else if (pieceSelected === 2) {
+      if (to.row < from.row) {
+        if (from.col === to.col - 2) {
+          this.skippedPosition.row = to.row + 1;
+          this.skippedPosition.col = to.col - 1;
+          return true;
+        }
+        if (from.col === to.col + 2) {
+          this.skippedPosition.row = to.row + 1;
+          this.skippedPosition.col = to.col + 1;
+          return true;
+        }
+      }
+    }
+    return false;
+
+  }
+
+  public isValidMove(from: Position, to: Position) {
+    const checkIfSpaceEmpty = this.pieces[to.row][to.col];
+    const pieceSelected = this.pieces[from.row][from.col];
+    if (checkIfSpaceEmpty === 1 || checkIfSpaceEmpty === 2) {
       return false;
     }
-
-    if (from.row === to.row && [from.col - 1, from.col + 1].includes(to.col)) {
-      return true;
+    if (pieceSelected === 1) {
+      if (to.row > from.row) {
+        if (from.col === to.col - 1 || from.col === to.col + 1) {
+          return true;
+        }
+      }
+    } else if (pieceSelected === 2) {
+      if (to.row < from.row) {
+        if (from.col === to.col - 1 || from.col === to.col + 1) {
+          return true;
+        }
+        // if (from.col === to.col - 2 || from.col === to.col + 2) {
+        //   return true;
+        // }
+      }
     }
-
-    if (from.col === to.col && [from.row - 1, from.row + 1].includes(to.row)) {
-      return true;
-    }
-
     return false;
   }
 }
