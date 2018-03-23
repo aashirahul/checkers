@@ -26,7 +26,7 @@ export class PieceStateActions {
             pieces[to.row][to.col] = pieces[from.row][from.col];
             pieces[from.row][from.col] = null;
             pieces[skipped.row][skipped.col] = null;
-
+            this._store.dispatch({ type: DISPLAY_PIECES, payload: pieces });
         });
     }
 }

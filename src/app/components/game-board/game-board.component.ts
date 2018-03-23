@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { PieceStateActions } from '../../actionHandlers/pieceState.actions';
 
 import { Piece } from '../../models/piece';
 
@@ -12,11 +13,17 @@ type Position = { row: number, col: number };
 })
 export class GameBoardComponent implements OnInit {
   pieces: Array<Array<Piece>>;
-  public redPiece: boolean;
+  public isMoving : boolean;
+  public originalPosition: Position;
+  public skippedPosition : Position;
+  public currentPlayer = "Player Red";
 
 
 
-  constructor(private _store: Store<any>) { }
+  constructor(
+    private _store: Store<any>,
+    private _pieceState: PieceStateActions)
+     { }
 
   ngOnInit() {
     this._store.select('pieces').subscribe((pieces) => this.pieces = pieces);
@@ -44,26 +51,34 @@ export class GameBoardComponent implements OnInit {
     if (pieceSelected === 1) {
       if (to.row > from.row) {
         if (from.col === to.col - 2) {
-          this.skippedPosition.row = to.row + 1;
-          this.skippedPosition.col = to.col - 1;
+          this.skippedPosition = {
+            row: from.row + 1,
+            col: from.col + 1
+          };
           return true;
         }
         if (from.col === to.col + 2) {
-          this.skippedPosition.row = to.row + 1;
-          this.skippedPosition.col = to.col + 1;
+          this.skippedPosition = {
+            row: from.row + 1,
+            col: from.col + 1
+          };
           return true;
         }
       }
     } else if (pieceSelected === 2) {
       if (to.row < from.row) {
         if (from.col === to.col - 2) {
-          this.skippedPosition.row = to.row + 1;
-          this.skippedPosition.col = to.col - 1;
+          this.skippedPosition = {
+            row: to.row + 1,
+            col: to.col - 1
+          };
           return true;
         }
         if (from.col === to.col + 2) {
-          this.skippedPosition.row = to.row + 1;
-          this.skippedPosition.col = to.col + 1;
+          this.skippedPosition = {
+            row: to.row + 1,
+            col: to.col + 1
+          };
           return true;
         }
       }
